@@ -1,7 +1,8 @@
 <template>
-	<div id="app">
-		<img alt="Vue logo" src="./assets/logo.png" />
-		<HelloWorld msg="Welcome to Your Vue.js App" />
+	<div>
+		<app-header></app-header>
+		<div>Content</div>
+		<app-footer></app-footer>
 	</div>
 </template>
 
@@ -10,4 +11,5 @@
 </script>
 
 <style>
+	@import "./assets/style.css";
 </style>
