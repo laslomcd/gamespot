@@ -2,17 +2,38 @@
 	<header>
 		<div class="container header_container">
 			<div class="logo">
-				<a href="/">GameSpot</a>
+				<router-link to="/">GameSpot</router-link>
 			</div>
-			<div class="login">
-				<a href="/signin">
+			<div class="login" v-if="!isAuth">
+				<router-link to="/signin">
 					<img :src="require('../../assets/images/login.png')" alt="Login Image" />
-				</a>
+				</router-link>
+			</div>
+			<div v-if="isAuth">
+				<ul>
+					<li>
+						<span @click="logoutUser">Logout</span>
+					</li>
+					<li>
+						<router-link to="/dashboard">Dashboard</router-link>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</header>
 </template>
 
 <script>
-	export default {};
+	export default {
+		computed: {
+			isAuth() {
+				return this.$store.getters["admin/isAuth"];
+			}
+		},
+		methods: {
+			logoutUser() {
+				this.$store.commit("admin/logoutUser");
+			}
+		}
+	};
 </script>

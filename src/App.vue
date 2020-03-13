@@ -7,7 +7,11 @@
 </template>
 
 <script>
-	export default {};
+	export default {
+		created() {
+			this.$store.dispatch("admin/refreshToken");
+		}
+	};
 </script>
 
 <style>
