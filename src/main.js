@@ -4,6 +4,7 @@ import router from './routes';
 import VueResource from 'vue-resource';
 import store from './store/store';
 import vuelidate from 'vuelidate';
+import wysiswyg from 'vue-wysiwyg';
 
 import { MdCard } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
@@ -23,6 +24,7 @@ Vue.use(VueResource);
 Vue.http.options.route = '';
 
 Vue.use(vuelidate);
+Vue.use(wysiswyg, {});
 
 Vue.config.productionTip = false
 
