@@ -19,9 +19,33 @@
 			</div>
 
 			<div class="input_field">
-				<wysiwyg></wysiwyg>
+				<wysiwyg v-model="formData.content"></wysiwyg>
 			</div>
+
+			<div class="input_field" :class="{invalid: $v.formData.rating.$error}">
+				<label for="rating">Rating</label>
+				<select name="rating" id="rating" v-model="formData.rating" @blur="$v.formData.rating.$touch()">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+				<p class="error_label" v-if="$v.formData.rating.$error">You need to select a rating.</p>
+			</div>
+
+			<button type="submit">Add Post</button>
 		</form>
+
+		<md-dialog :md-active="dialog">
+			<p>Your post has no content, are you sure you want to post this?</p>
+			<md-dialog-actions>
+				<md-button class="md-primary" @click="dialogOnCancel">Oops, I want to add it!</md-button>
+				<md-button class="md-primary" @click="dialogOnConfirm">Yes, I am sure.</md-button>
+			</md-dialog-actions>
+		</md-dialog>
+
+		<div v-if="addpost" class="post_succesfull">Your post was posted successfully!</div>
 	</div>
 </template>
 
@@ -31,6 +55,7 @@
 	export default {
 		data() {
 			return {
+				dialog: false,
 				formData: {
 					title: "",
 					desc: "",
@@ -53,8 +78,46 @@
 				}
 			}
 		},
+		computed: {
+			addpost() {
+				let status = this.$store.getters["admin/addPostStatus"];
+				if (status) {
+					this.clearPost();
+				}
+				return status;
+			}
+		},
 		methods: {
-			submitHandler() {}
+			submitHandler() {
+				if (!this.$v.$invalid) {
+					if (this.formData.content === "") {
+						this.dialog = true;
+					} else {
+						this.addPost();
+					}
+				} else {
+					alert("something is wrong");
+				}
+			},
+			addPost() {
+				this.$store.dispatch("admin/addPost", this.formData);
+			},
+			dialogOnCancel() {
+				this.dialog = false;
+			},
+			dialogOnConfirm() {
+				this.dialog = false;
+				this.addPost();
+			},
+			clearPost() {
+				this.$v.$reset();
+				this.formData = {
+					title: "",
+					desc: "",
+					content: "",
+					rating: ""
+				};
+			}
 		}
 	};
 </script>

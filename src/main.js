@@ -6,11 +6,14 @@ import store from './store/store';
 import vuelidate from 'vuelidate';
 import wysiswyg from 'vue-wysiwyg';
 
-import { MdCard } from 'vue-material/dist/components'
+import { MdCard, MdButton, MdContent, MdDialog } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
 Vue.use(MdCard)
+Vue.use(MdButton)
+Vue.use(MdDialog)
+Vue.use(MdContent)
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -21,7 +24,7 @@ Vue.component('app-footer', Footer);
 Vue.component('app-button', Button);
 
 Vue.use(VueResource);
-Vue.http.options.route = '';
+Vue.http.options.root = "https://gamespot-e2cf1.firebaseio.com/";
 
 Vue.use(vuelidate);
 Vue.use(wysiswyg, {});
